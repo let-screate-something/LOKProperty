@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard - LOK Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body data-page="dashboard">
+  <div class="layout">
+    <aside class="sidebar" id="sidebar"></aside>
+
+    <main class="content">
+      <div class="page-head">
+        <h1>Dashboard</h1>
+        <a class="btn btn-accent" href="properties.html?add=1" style="text-decoration:none">+ Add property</a>
+      </div>
+
+      <!-- The numbers are filled in by dashboard.js -->
+      <div class="stats">
+        <div class="stat"><div class="label">Total properties</div><div class="number" id="statTotal">-</div></div>
+        <div class="stat green"><div class="label">Available</div><div class="number" id="statAvailable">-</div></div>
+        <div class="stat"><div class="label">Sold</div><div class="number" id="statSold">-</div></div>
+        <div class="stat orange"><div class="label">Enquiries</div><div class="number" id="statEnquiries">-</div></div>
+        <div class="stat"><div class="label">Total sales value</div><div class="number" id="statSales">-</div></div>
+      </div>
+
+      <h2>Latest enquiries</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Date</th><th>Name</th><th>Email</th><th>Property</th><th>Message</th></tr></thead>
+          <tbody id="recentBody"><tr><td colspan="5" class="empty">Loading...</td></tr></tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

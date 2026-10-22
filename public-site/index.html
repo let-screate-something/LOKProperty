@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Home - LOK Property Solutions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/layout.js"></script>
+  <script>
+    initLayout();
+  </script>
+  <script>
+    /* Home page: hero + featured properties + call to action */
+    async function loadHome() {
+      try {
+        const props = await publicRequest("/properties?status=available&sort=newest");
+        const featured = props.slice(0, 3);
+        const grid = document.getElementById("featuredGrid");
+        if (featured.length === 0) {
+          grid.innerHTML = '<div class="empty-state"><h2>No properties available yet</h2></div>';
+          return;
+        }
+        grid.innerHTML = featured.map((p) => `
+          <article class="property-card">
+            ${p.cover_image ? `<img class="property-image" src="${esc(p.cover_image)}" alt="${esc(p.title)}" loading="lazy">` : '<div class="property-image"></div>'}
+            <div class="property-info">
+              <div class="property-badges">
+                <span class="badge ${p.status}">${p.status === "sold" ? "Sold" : "Available"}</span>
+                <span class="badge">${p.type === "house" ? "House" : "Plot"}</span>
+              </div>
+              <h3>${esc(p.title)}</h3>
+              <p class="property-city">${esc(p.city)}</p>
+              <p class="property-price">${formatPrice(p.price)}</p>
+              ${p.area_sqft ? `<p class="property-area">${esc(p.area_sqft)} sq ft</p>` : ""}
+              ${p.type === "house" && p.bedrooms ? `<p class="property-bedrooms">${esc(p.bedrooms)} BHK</p>` : ""}
+              <a href="property.html?id=${p.id}" class="btn btn-accent">View Details</a>
+            </div>
+          </article>
+        `).join("");
+      } catch (error) {
+        document.getElementById("featuredGrid").innerHTML = '<div class="error-state"><h2>Could not load properties</h2><p>' + esc(error.message) + '</p></div>';
+      }
+    }
+    loadHome();
+  </script>
+</body>
+</html>

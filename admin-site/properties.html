@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Properties - LOK Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body data-page="properties">
+  <div class="layout">
+    <aside class="sidebar" id="sidebar"></aside>
+
+    <main class="content">
+      <div class="page-head">
+        <h1>Properties</h1>
+        <button class="btn btn-accent" id="addBtn">+ Add property</button>
+      </div>
+
+      <!-- Filters (work instantly in the browser) -->
+      <div class="filters">
+        <select id="filterStatus" aria-label="Filter by status">
+          <option value="">All status</option>
+          <option value="available">Available</option>
+          <option value="sold">Sold</option>
+        </select>
+        <select id="filterType" aria-label="Filter by type">
+          <option value="">Plots and houses</option>
+          <option value="plot">Plots</option>
+          <option value="house">Houses</option>
+        </select>
+        <input id="filterSearch" type="search" placeholder="Search title or city" aria-label="Search">
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Photo</th><th>Title</th><th>Type</th><th>City</th><th>Price</th><th>Status</th><th>Actions</th></tr>
+          </thead>
+          <tbody id="propertyBody"><tr><td colspan="7" class="empty">Loading...</td></tr></tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <!-- ========== Pop-up 1: add / edit a property ========== -->
+  <dialog id="propertyDialog">
+    <form id="propertyForm">
+      <h2 id="propertyDialogTitle">Add property</h2>
+      <div class="form-grid">
+        <div class="full">
+          <label for="fTitle">Title *</label>
+          <input id="fTitle" required maxlength="120" placeholder="e.g. 2BHK House near station">
+        </div>
+        <div>
+          <label for="fType">Type *</label>
+          <select id="fType" required>
+            <option value="plot">Plot</option>
+            <option value="house">House</option>
+          </select>
+        </div>
+        <div>
+          <label for="fPrice">Price (₹) *</label>
+          <input id="fPrice" type="number" min="1" step="any" required placeholder="4500000">
+        </div>
+        <div>
+          <label for="fArea">Area (sq ft)</label>
+          <input id="fArea" type="number" min="0" placeholder="1200">
+        </div>
+        <div id="bedroomsField">
+          <label for="fBedrooms">Bedrooms</label>
+          <input id="fBedrooms" type="number" min="0" placeholder="2">
+        </div>
+        <div>
+          <label for="fCity">City *</label>
+          <input id="fCity" required maxlength="60">
+        </div>
+        <div>
+          <label for="fAddress">Address / locality</label>
+          <input id="fAddress" maxlength="200">
+        </div>
+        <div class="full">
+          <label for="fDescription">Description</label>
+          <textarea id="fDescription" placeholder="Facing, road width, nearby places, documents..."></textarea>
+        </div>
+        <div class="full">
+          <label for="fImages">Photo links (one per line)</label>
+          <textarea id="fImages" placeholder="https://res.cloudinary.com/.../photo1.jpg"></textarea>
+          <div class="hint">The first link is the cover photo. Direct photo upload will be added later.</div>
+        </div>
+      </div>
+      <p class="error-text" id="propertyError"></p>
+      <div class="dialog-buttons">
+        <button type="button" class="btn btn-light" data-close="propertyDialog">Cancel</button>
+        <button type="submit" class="btn" id="propertySave">Save</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- ========== Pop-up 2: mark as sold (saves the buy record) ========== -->
+  <dialog id="soldDialog">
+    <form id="soldForm">
+      <h2>Mark as sold</h2>
+      <p class="muted" id="soldTitle"></p>
+      <div class="form-grid">
+        <div class="full">
+          <label for="sName">Buyer name *</label>
+          <input id="sName" required maxlength="100">
+        </div>
+        <div>
+          <label for="sEmail">Buyer email</label>
+          <input id="sEmail" type="email">
+        </div>
+        <div>
+          <label for="sPhone">Buyer phone</label>
+          <input id="sPhone" type="tel">
+        </div>
+        <div class="full">
+          <label for="sPrice">Final sale price (₹)</label>
+          <input id="sPrice" type="number" min="1" step="any">
+          <div class="hint">Filled with the listed price. Change it if the deal was different.</div>
+        </div>
+      </div>
+      <p class="error-text" id="soldError"></p>
+      <div class="dialog-buttons">
+        <button type="button" class="btn btn-light" data-close="soldDialog">Cancel</button>
+        <button type="submit" class="btn btn-accent" id="soldSave">Confirm sale</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/properties.js"></script>
+</body>
+</html>

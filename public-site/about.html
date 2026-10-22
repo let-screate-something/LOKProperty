@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>About - LOK Property Solutions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/layout.js"></script>
+  <script>
+    initLayout();
+  </script>
+  <script>
+    /* About page: company info */
+    document.addEventListener("DOMContentLoaded", () => {
+      const container = document.createElement("div");
+      container.className = "container";
+      container.style.paddingTop = "40px";
+      container.style.paddingBottom = "40px";
+      container.innerHTML = `
+        <h1>About Us</h1>
+        <p>Welcome to <strong>${esc(BUSINESS_NAME)}</strong>, your trusted partner for buying and selling plots and houses.</p>
+        <p>We help you find the perfect property with complete peace of mind. Whether you are looking for a plot to build your dream home or a ready-to-move-in house, we have options to suit every need and budget.</p>
+        <h3>Why Choose Us?</h3>
+        <ul>
+          <li>Verified property listings</li>
+          <li>Transparent pricing</li>
+          <li>Dedicated customer support</li>
+          <li>Easy enquiry process</li>
+        </ul>
+      `;
+      document.body.appendChild(container);
+    });
+  </script>
+</body>
+</html>

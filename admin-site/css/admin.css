@@ -1,0 +1,169 @@
+/*
+  admin.css - styles for the whole admin website.
+  Simple look: light background, one blue main colour, one orange action colour.
+*/
+
+/* ---------- colours and basics (change the look here) ---------- */
+:root {
+  --blue: #1d4ed8;
+  --blue-light: #eff4ff;
+  --orange: #ea580c;
+  --green: #15803d;
+  --green-light: #e8f6ec;
+  --red: #b91c1c;
+  --red-light: #fdeceb;
+  --text: #1f2937;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+  --bg: #f6f7fb;
+  --white: #ffffff;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Poppins", system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 15px;
+  color: var(--text);
+  background: var(--bg);
+}
+
+h1 { font-size: 1.5rem; margin: 0; }
+h2 { font-size: 1.1rem; margin: 0 0 12px; }
+a { color: var(--blue); }
+
+/* ---------- page layout: menu on the left, content on the right ---------- */
+/* minmax(0, 1fr) lets wide tables scroll inside their box instead of stretching the page */
+.layout { display: grid; grid-template-columns: 230px minmax(0, 1fr); min-height: 100vh; }
+
+.sidebar {
+  background: var(--white);
+  border-right: 1px solid var(--border);
+  padding: 20px 16px;
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+.brand { font-size: 1.3rem; font-weight: 700; color: var(--blue); margin-bottom: 24px; }
+.brand span { color: var(--text); font-weight: 500; }
+
+.sidebar nav { display: flex; flex-direction: column; gap: 4px; }
+.sidebar nav a {
+  padding: 10px 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--text);
+}
+.sidebar nav a:hover { background: var(--bg); }
+.sidebar nav a.active { background: var(--blue-light); color: var(--blue); font-weight: 600; }
+
+.sidebar-footer { margin-top: auto; font-size: 0.85rem; color: var(--muted); }
+.sidebar-footer .who { margin-bottom: 8px; }
+
+.content { padding: 28px; max-width: 1200px; width: 100%; }
+.page-head {
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 12px; margin-bottom: 20px;
+}
+.muted { color: var(--muted); }
+
+/* ---------- buttons ---------- */
+.btn {
+  border: 0; border-radius: 8px; padding: 10px 16px; cursor: pointer;
+  font: inherit; font-weight: 600; background: var(--blue); color: var(--white);
+}
+.btn:hover { filter: brightness(0.93); }
+.btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.btn-accent { background: var(--orange); }
+.btn-light { background: var(--white); color: var(--text); border: 1px solid var(--border); }
+.btn-danger { background: var(--red-light); color: var(--red); }
+.btn-success { background: var(--green-light); color: var(--green); }
+.btn-small { padding: 6px 10px; font-size: 0.85rem; }
+
+/* ---------- cards and stat boxes ---------- */
+.card {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 12px; padding: 18px; margin-bottom: 20px;
+}
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 16px; margin-bottom: 20px; }
+.stat { background: var(--white); border: 1px solid var(--border); border-radius: 12px; padding: 16px; }
+.stat .label { color: var(--muted); font-size: 0.85rem; }
+.stat .number { font-size: 1.8rem; font-weight: 700; margin-top: 4px; }
+.stat.green .number { color: var(--green); }
+.stat.orange .number { color: var(--orange); }
+
+/* ---------- tables ---------- */
+.table-wrap { overflow-x: auto; background: var(--white); border: 1px solid var(--border); border-radius: 12px; }
+table { width: 100%; border-collapse: collapse; }
+th, td { padding: 12px 14px; text-align: left; border-bottom: 1px solid var(--border); vertical-align: middle; }
+th { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); background: #fafafa; }
+tr:last-child td { border-bottom: 0; }
+.actions { display: flex; gap: 6px; flex-wrap: wrap; }
+.empty { padding: 30px; text-align: center; color: var(--muted); }
+.thumb { width: 64px; height: 48px; object-fit: cover; border-radius: 6px; background: var(--border); display: block; }
+.message-cell { max-width: 320px; white-space: pre-wrap; word-break: break-word; }
+
+/* status badges */
+.badge { display: inline-block; padding: 3px 10px; border-radius: 99px; font-size: 0.8rem; font-weight: 600; }
+.badge.available { background: var(--green-light); color: var(--green); }
+.badge.sold { background: var(--red-light); color: var(--red); }
+
+/* ---------- filters row ---------- */
+.filters { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
+
+/* ---------- forms ---------- */
+label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 4px; }
+input, select, textarea {
+  width: 100%; padding: 10px 12px; font: inherit; color: var(--text);
+  border: 1px solid var(--border); border-radius: 8px; background: var(--white);
+}
+input:focus, select:focus, textarea:focus { outline: 2px solid var(--blue-light); border-color: var(--blue); }
+textarea { resize: vertical; min-height: 80px; }
+.filters select, .filters input { width: auto; min-width: 150px; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.form-grid .full { grid-column: 1 / -1; }
+.hint { font-size: 0.8rem; color: var(--muted); margin-top: 4px; }
+.error-text { color: var(--red); font-size: 0.9rem; margin: 10px 0 0; min-height: 1.2em; }
+
+/* ---------- pop-up windows (native <dialog>) ---------- */
+dialog {
+  border: 0; border-radius: 14px; padding: 24px; width: min(640px, 94vw);
+  max-height: 92vh; overflow-y: auto; color: var(--text);
+}
+dialog::backdrop { background: rgba(15, 23, 42, 0.45); }
+.dialog-buttons { display: flex; justify-content: flex-end; gap: 10px; margin-top: 18px; }
+
+/* ---------- message at the bottom of the screen ---------- */
+.toast {
+  position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 20px);
+  background: #111827; color: var(--white); padding: 12px 18px; border-radius: 10px;
+  opacity: 0; pointer-events: none; transition: 0.25s; z-index: 50; max-width: 90vw;
+}
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+.toast.error { background: var(--red); }
+
+/* ---------- login page ---------- */
+.login-page { display: grid; place-items: center; min-height: 100vh; padding: 16px; }
+.login-box {
+  background: var(--white); border: 1px solid var(--border); border-radius: 14px;
+  padding: 32px; width: min(380px, 100%);
+}
+.login-box .brand { text-align: center; margin-bottom: 4px; }
+.login-box p { text-align: center; margin: 0 0 22px; }
+.login-box .field { margin-bottom: 14px; }
+.login-box .btn { width: 100%; }
+
+/* ---------- phones and small screens ---------- */
+@media (max-width: 800px) {
+  .layout { grid-template-columns: minmax(0, 1fr); }
+  .sidebar { position: static; height: auto; flex-direction: row; flex-wrap: wrap; align-items: center; gap: 8px; padding: 12px; }
+  .brand { margin: 0 12px 0 0; }
+  .sidebar nav { flex-direction: row; flex-wrap: wrap; }
+  .sidebar-footer { margin: 0 0 0 auto; display: flex; align-items: center; gap: 10px; }
+  .sidebar-footer .who { display: none; }
+  .content { padding: 16px; }
+  .form-grid { grid-template-columns: 1fr; }
+}

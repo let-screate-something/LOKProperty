@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Property - LOK Property Solutions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/layout.js"></script>
+  <script>
+    initLayout();
+  </script>
+  <script>
+    /* Property detail page: shows one property with photos and enquiry form */
+    const params = new URLSearchParams(window.location.search);
+    const propertyId = params.get("id");
+
+    async function loadProperty() {
+      if (!propertyId) {
+        document.getElementById("propertyContent").innerHTML = '<div class="error-state"><h2>No property specified</h2></div>';
+        return;
+      }
+      try {
+        const p = await publicRequest("/properties/" + propertyId);
+        document.title = esc(p.title) + " - LOK Property Solutions";
+
+        const imagesHtml = p.images && p.images.length
+          ? p.images.map((url, i) => `<div class="gallery-item">${i === 0 ? `<img class="gallery-img" src="${esc(url)}" alt="${esc(p.title)}">` : `<img class="gallery-img" src="${esc(url)}" alt="${esc(p.title)}">`}</div>`).join("")
+          : '<div class="gallery-item"><div class="gallery-img placeholder"></div></div>';
+
+        document.getElementById("propertyContent").innerHTML = `
+          <div class="property-detail">
+            <div class="property-gallery">${imagesHtml}</div>
+            <div class="property-data">
+              <div class="property-badges">
+                <span class="badge ${p.status}">${p.status === "sold" ? "Sold" : "Available"}</span>
+                <span class="badge">${p.type === "house" ? "House" : "Plot"}</span>
+              </div>
+              <h1>${esc(p.title)}</h1>
+              <p class="property-address">${esc(p.address || p.city)}</p>
+              <p class="property-price">${formatPrice(p.price)}</p>
+              <div class="property-details">
+                ${p.area_sqft ? `<span><strong>Area:</strong> ${esc(p.area_sqft)} sq ft</span>` : ""}
+                ${p.type === "house" && p.bedrooms ? `<span><strong>Bedrooms:</strong> ${esc(p.bedrooms)} BHK</span>` : ""}
+                ${p.city ? `<span><strong>City:</strong> ${esc(p.city)}</span>` : ""}
+              </div>
+              <p class="property-description">${esc(p.description || "No description available.")}</p>
+              ${p.status === "available"
+                ? `<a href="contact.html?property=${p.id}" class="btn btn-accent">Send Enquiry</a>`
+                : `<button class="btn btn-light" disabled>Already Sold</button>`}
+            </div>
+          </div>
+        `;
+      } catch (error) {
+        document.getElementById("propertyContent").innerHTML = '<div class="error-state"><h2>Property not found</h2><p>' + esc(error.message) + '</p></div>';
+      }
+    }
+    loadProperty();
+  </script>
+</body>
+</html>

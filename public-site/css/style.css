@@ -1,0 +1,340 @@
+/*
+  style.css - shared styles for the LOK Property Solutions public website.
+  Every section has a comment explaining what it does.
+  Colours, spacing and border-radius are variables at the top.
+*/
+
+/* =====================================================================
+   1. COLOUR VARIABLES
+   ===================================================================== */
+:root {
+  --blue: #1d4ed8;
+  --blue-light: #eff4ff;
+  --green: #15803d;
+  --green-light: #e8f6ec;
+  --red: #b91c1c;
+  --red-light: #fdeceb;
+  --text: #1f2937;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+  --bg: #f6f7fb;
+  --white: #ffffff;
+  --orange: #ea580c;
+  --gap: 16px;
+  --radius: 12px;
+}
+
+/* =====================================================================
+   2. BASE STYLES
+   ===================================================================== */
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: "Poppins", system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 15px; color: var(--text); background: var(--bg);
+  line-height: 1.5;
+}
+h1, h2, h3 { margin: 0 0 12px; color: var(--text); line-height: 1.3; }
+h1 { font-size: 1.75rem; }
+h2 { font-size: 1.25rem; }
+h3 { font-size: 1.1rem; }
+p { margin: 0 0 12px; }
+a { color: var(--blue); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 16px; }
+
+/* =====================================================================
+   3. NAVBAR
+   ===================================================================== */
+.site-header {
+  background: var(--white); border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; z-index: 30;
+}
+.header-inner {
+  max-width: 1200px; margin: 0 auto; padding: 0 16px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; min-height: 64px;
+}
+.brand {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 1.35rem; font-weight: 700; color: var(--blue);
+  text-decoration: none;
+}
+.brand-lok { color: var(--blue); font-weight: 800; }
+.brand-rest { color: var(--text); font-weight: 500; }
+.nav-toggle {
+  display: none; background: none; border: 1px solid var(--border);
+  border-radius: 6px; padding: 8px 10px; cursor: pointer;
+  width: 40px; height: 40px; align-items: center; justify-content: center;
+}
+.nav-toggle .hamburger {
+  display: block; width: 20px; height: 2px; background: var(--text);
+  position: relative;
+}
+.nav-toggle .hamburger::before,
+.nav-toggle .hamburger::after {
+  content: ""; position: absolute; left: 0; width: 20px; height: 2px;
+  background: var(--text);
+}
+.nav-toggle .hamburger::before { top: -6px; }
+.nav-toggle .hamburger::after { bottom: -6px; }
+.main-nav { display: flex; align-items: center; gap: 4px; }
+.nav-list {
+  display: flex; gap: 4px; list-style: none; margin: 0; padding: 0;
+}
+.nav-link {
+  display: block; padding: 10px 14px; border-radius: 8px;
+  color: var(--text); font-weight: 500; text-decoration: none;
+}
+.nav-link:hover { background: var(--bg); text-decoration: none; }
+.nav-link.active {
+  background: var(--blue-light); color: var(--blue); font-weight: 600;
+}
+/* =====================================================================
+   4. FOOTER
+   ===================================================================== */
+.site-footer {
+  background: var(--white); border-top: 1px solid var(--border);
+  margin-top: 40px; padding: 32px 0;
+}
+.footer-inner {
+  max-width: 1200px; margin: 0 auto; padding: 0 16px;
+  display: grid; grid-template-columns: 1fr 2fr 1fr; gap: 30px;
+}
+.footer-col { display: flex; flex-direction: column; gap: 12px; }
+.footer-brand { font-size: 1.25rem; font-weight: 700; color: var(--text); margin: 0; }
+.footer-tagline { color: var(--muted); font-size: 0.9rem; margin: 0; line-height: 1.5; }
+.footer-heading { font-size: 0.95rem; font-weight: 600; color: var(--text); margin: 0 0 10px; }
+.footer-links, .footer-contact-list {
+  list-style: none; margin: 0; padding: 0;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.footer-links a, .footer-contact-link {
+  color: var(--text); text-decoration: none; font-size: 0.9rem;
+}
+.footer-links a:hover, .footer-contact-link:hover { color: var(--blue); text-decoration: none; }
+.footer-contact-list li {
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: 0.9rem; color: var(--text);
+}
+.footer-address { font-size: 0.85rem; color: var(--muted); line-height: 1.5; }
+.footer-bottom {
+  max-width: 1200px; margin: 24px auto 0; padding: 0 16px;
+  border-top: 1px solid var(--border); padding-top: 16px;
+  color: var(--muted); font-size: 0.85rem; text-align: center;
+}
+
+/* =====================================================================
+   5. BUTTONS
+   ===================================================================== */
+.btn {
+  border: 0; border-radius: var(--radius); padding: 10px 18px;
+  cursor: pointer; font: inherit; font-weight: 600;
+  background: var(--blue); color: var(--white);
+  text-decoration: none; display: inline-block; text-align: center;
+}
+.btn:hover { filter: brightness(0.93); text-decoration: none; }
+.btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.btn-light { background: var(--white); color: var(--text); border: 1px solid var(--border); }
+.btn-small { padding: 6px 12px; font-size: 0.85rem; }
+
+/* =====================================================================
+   6. PROPERTY CARD (shared by Home and Listings)
+   ===================================================================== */
+.properties-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--gap); margin-top: 24px;
+}
+.property-card {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: var(--radius); overflow: hidden;
+  display: flex; flex-direction: column; height: 100%;
+}
+.property-image {
+  width: 100%; height: 200px; background: var(--border);
+  overflow: hidden; position: relative;
+}
+.property-image img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+.property-badge {
+  position: absolute; top: 10px; left: 10px;
+  padding: 4px 10px; border-radius: 99px;
+  font-size: 0.75rem; font-weight: 700; z-index: 2;
+}
+.property-badge.available { background: var(--green-light); color: var(--green); }
+.property-badge.sold { background: var(--red-light); color: var(--red); }
+.property-info {
+  padding: 14px 16px; display: flex; flex-direction: column;
+  gap: 8px; flex: 1;
+}
+.property-title {
+  font-size: 1rem; font-weight: 600; color: var(--text); margin: 0;
+  display: -webkit-box; -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical; overflow: hidden;
+}
+.property-title:hover { color: var(--blue); }
+.property-meta {
+  display: flex; gap: 10px; font-size: 0.85rem;
+  color: var(--muted); flex-wrap: wrap;
+}
+.property-meta span { white-space: nowrap; }
+.property-price {
+  font-size: 1.1rem; font-weight: 700; color: var(--text); margin-top: auto;
+}
+.property-actions {
+  padding: 12px 16px 16px; border-top: 1px solid var(--border);
+  display: flex; gap: 8px;
+}
+.btn-view { flex: 1; padding: 8px 12px; font-size: 0.85rem; }
+
+/* =====================================================================
+   7. BADGES
+   ===================================================================== */
+.badge {
+  display: inline-block; padding: 3px 10px; border-radius: 99px;
+  font-size: 0.8rem; font-weight: 600;
+}
+.badge.available { background: var(--green-light); color: var(--green); }
+.badge.sold { background: var(--red-light); color: var(--red); }
+
+/* =====================================================================
+   8. FORM FIELDS
+   ===================================================================== */
+label {
+  display: block; font-size: 0.85rem; font-weight: 600;
+  margin-bottom: 4px; color: var(--text);
+}
+input, select, textarea {
+  width: 100%; padding: 10px 12px; font: inherit;
+  color: var(--text); border: 1px solid var(--border);
+  border-radius: 8px; background: var(--white);
+}
+input:focus, select:focus, textarea:focus {
+  outline: 2px solid var(--blue-light); border-color: var(--blue);
+}
+textarea { resize: vertical; min-height: 100px; }
+.error-text { color: var(--red); font-size: 0.9rem; margin: 6px 0 0; min-height: 1.2em; }
+.hint { font-size: 0.8rem; color: var(--muted); margin-top: 4px; }
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px;
+}
+.form-grid .full { grid-column: 1 / -1; }
+
+/* =====================================================================
+   9. TOAST MESSAGES (used by api.js showToast())
+   ===================================================================== */
+.toast {
+  position: fixed; left: 50%; bottom: 24px;
+  transform: translate(-50%, 20px);
+  background: #111827; color: var(--white);
+  padding: 12px 18px; border-radius: 10px;
+  opacity: 0; pointer-events: none; transition: 0.25s;
+  z-index: 50; max-width: 90vw; font-size: 0.9rem;
+}
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+.toast.error { background: var(--red); }
+
+/* =====================================================================
+   10. LOADING / EMPTY / ERROR STATES
+   ===================================================================== */
+.loading {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 40px 16px; color: var(--muted); font-size: 0.95rem;
+}
+.empty-state {
+  text-align: center; padding: 60px 16px; color: var(--muted);
+}
+.empty-state h2 { color: var(--text); margin-bottom: 8px; }
+.error-state {
+  text-align: center; padding: 60px 16px; color: var(--red);
+}
+.error-state h2 { color: var(--red); margin-bottom: 8px; }
+
+/* =====================================================================
+   11. MOBILE LAYOUT (phones and small screens)
+   ===================================================================== */
+@media (max-width: 768px) {
+  .nav-toggle { display: flex; }
+  .main-nav {
+    position: fixed; inset: 0; background: var(--white);
+    border-right: 1px solid var(--border);
+    flex-direction: column; padding: 80px 16px 24px; gap: 0;
+    transform: translateX(100%); transition: transform 0.25s ease;
+    width: 260px; box-shadow: -2px 0 8px rgba(0, 0, 0, 0.08); z-index: 40;
+  }
+  .main-nav.open { transform: translateX(0); }
+  .nav-list { flex-direction: column; gap: 0; }
+  .nav-link {
+    padding: 12px 16px; border-radius: 0; border-bottom: 1px solid var(--border);
+  }
+  .nav-link.active {
+    background: var(--blue-light); color: var(--blue);
+  }
+  .footer-inner { grid-template-columns: 1fr; gap: 24px; }
+  .properties-grid { grid-template-columns: 1fr; }
+  .property-image { height: 180px; }
+  body { padding-bottom: 16px; }
+
+/* =====================================================================
+   12. BTN ACCENT (orange main buttons)
+   ===================================================================== */
+.btn-accent { background: var(--orange); color: var(--white); }
+.btn-accent:hover { filter: brightness(0.93); text-decoration: none; }
+
+/* =====================================================================
+   13. PROPERTY DETAIL PAGE
+   ===================================================================== */
+.property-detail {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 30px;
+  margin-top: 24px;
+}
+.property-gallery {
+  display: flex; flex-direction: column; gap: 10px;
+}
+.gallery-item {
+  width: 100%; height: 300px; background: var(--border);
+  border-radius: var(--radius); overflow: hidden;
+}
+.gallery-item .placeholder {
+  width: 100%; height: 100%; display: flex; align-items: center;
+  justify-content: center; color: var(--muted); font-size: 0.9rem;
+}
+.gallery-img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+.property-data h1 { font-size: 1.5rem; margin-bottom: 8px; }
+.property-address { color: var(--muted); margin-bottom: 12px; }
+.property-price { font-size: 1.5rem; font-weight: 700; color: var(--text); margin-bottom: 16px; }
+.property-details { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 20px; color: var(--muted); font-size: 0.9rem; }
+.property-description { line-height: 1.6; color: var(--text); margin-bottom: 20px; }
+
+/* =====================================================================
+   14. CONTACT PAGE
+   ===================================================================== */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 30px;
+  margin-top: 24px;
+}
+.contact-info { background: var(--white); padding: 24px; border: 1px solid var(--border); border-radius: var(--radius); }
+.contact-info h3 { margin-top: 0; }
+.contact-item { display: flex; gap: 12px; margin-bottom: 16px; align-items: flex-start; }
+.contact-item svg { width: 20px; height: 20px; color: var(--blue); flex-shrink: 0; }
+.contact-form { background: var(--white); padding: 24px; border: 1px solid var(--border); border-radius: var(--radius); }
+.contact-form h3 { margin-top: 0; }
+
+@media (max-width: 768px) {
+  .property-detail { grid-template-columns: 1fr; }
+  .contact-grid { grid-template-columns: 1fr; }
+  .gallery-item { height: 200px; }
+}
+}

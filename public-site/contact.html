@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contact - LOK Property Solutions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/layout.js"></script>
+  <script>
+    initLayout();
+  </script>
+  <script>
+    /* Contact page: contact details + enquiry form */
+    const params = new URLSearchParams(window.location.search);
+    const preselectedProperty = params.get("property");
+
+    async function loadContact() {
+      try {
+        const props = await publicRequest("/properties?status=available");
+        const select = document.getElementById("enquiryProperty");
+        select.innerHTML = '<option value="">General enquiry</option>' +
+          props.map((p) => '<option value="' + esc(p.id) + '">' + esc(p.title) + ' - ' + esc(p.city) + '</option>').join("");
+        if (preselectedProperty) {
+          select.value = preselectedProperty;
+        }
+      } catch (error) {
+        // Non-fatal: form still works without property dropdown
+      }
+    }
+
+    document.getElementById("contactForm").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const btn = document.getElementById("contactBtn");
+      const errorBox = document.getElementById("contactError");
+      const successBox = document.getElementById("contactSuccess");
+      errorBox.textContent = "";
+      successBox.textContent = "";
+      btn.disabled = true;
+      btn.textContent = "Sending...";
+
+      try {
+        const propertyIdRaw = document.getElementById("enquiryProperty").value;
+        const propertyId = propertyIdRaw ? Number(propertyIdRaw) : null;
+        const response = await publicRequest("/enquiries", {
+          method: "POST",
+          body: {
+            name: document.getElementById("enquiryName").value,
+            email: document.getElementById("enquiryEmail").value,
+            message: document.getElementById("enquiryMessage").value,
+            property_id: propertyId,
+          },
+        });
+        successBox.textContent = response.message || "Thank you! We will contact you soon.";
+        document.getElementById("contactForm").reset();
+        if (preselectedProperty) {
+          select.value = preselectedProperty;
+        }
+      } catch (error) {
+        errorBox.textContent = error.message;
+      } finally {
+        btn.disabled = false;
+        btn.textContent = "Send Message";
+      }
+    });
+
+    loadContact();
+  </script>
+  <div class="container" style="padding-top: 32px; padding-bottom: 48px;">
+    <div class="contact-grid">
+      <div class="contact-form">
+        <h3>Send us a message</h3>
+        <p class="muted" style="margin-bottom: 16px;">Have a question about a property? Fill in the form below and we will get back to you.</p>
+        <form id="contactForm">
+          <div class="form-grid">
+            <div>
+              <label for="enquiryName">Name *</label>
+              <input id="enquiryName" type="text" required placeholder="Your name">
+            </div>
+            <div>
+              <label for="enquiryEmail">Email *</label>
+              <input id="enquiryEmail" type="email" required placeholder="you@example.com">
+            </div>
+            <div class="full">
+              <label for="enquiryProperty">Property (optional)</label>
+              <select id="enquiryProperty"><option value="">General enquiry</option></select>
+            </div>
+            <div class="full">
+              <label for="enquiryMessage">Message *</label>
+              <textarea id="enquiryMessage" required placeholder="Tell us what you are looking for..."></textarea>
+            </div>
+          </div>
+          <p class="error-text" id="contactError"></p>
+          <p class="success-text" id="contactSuccess" style="color: var(--green);"></p>
+          <button type="submit" class="btn btn-accent" id="contactBtn">Send Message</button>
+        </form>
+      </div>
+      <div class="contact-info">
+        <h3>Contact us</h3>
+        <div class="contact-item">
+          <span><strong>Phone:</strong> <a href="tel:${esc(PHONE)}">${esc(PHONE)}</a></span>
+        </div>
+        <div class="contact-item">
+          <span><strong>WhatsApp:</strong> <a href="https://wa.me/${esc(WHATSAPP_NUMBER)}" target="_blank" rel="noopener">Chat with us</a></span>
+        </div>
+        <div class="contact-item">
+          <span><strong>Email:</strong> <a href="mailto:${esc(EMAIL)}">${esc(EMAIL)}</a></span>
+        </div>
+        <div class="contact-item">
+          <span class="footer-address">${esc(ADDRESS)}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

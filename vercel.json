@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "framework": null,
+  "builds": [
+    { "src": "api/index.py", "use": "@vercel/python" },
+    { "src": "server/requirements.txt", "use": "@vercel/python" }
+  ],
+  "routes": [
+    { "src": "/api/(.*)", "dest": "api/index.py" },
+    { "src": "/(.*)", "status": 404 }
+  ]
+}
